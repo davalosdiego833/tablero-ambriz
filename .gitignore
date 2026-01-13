@@ -10,7 +10,7 @@ venv/
 ENV/
 .idea/
 .vscode/
-*.xlsx
+#*.xlsx
 # No ignorar Excel si el usuario los necesita como base, pero usualmente son datos locales.
 # El usuario dijo "sube todos los archivos", así que tal vez NO deba ignorar .xlsx si son sus bases de datos.
 # Sin embargo, subir archivos de Excel a GitHub no siempre es lo mejor. 

@@ -1,0 +1,361 @@
+/* Main Page Styling */
+.main {
+    background-color: #0e1117;
+    color: #ffffff;
+    font-family: 'Inter', sans-serif;
+}
+
+/* Seasonal Banner Styling */
+.seasonal-banner {
+    width: 100%;
+    height: 250px;
+    object-fit: cover;
+    border-radius: 20px;
+    margin-bottom: 2rem;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+}
+
+/* Camino a la Cumbre Specific Layouts */
+.cumbre-main-block [data-testid="stMetric"] {
+    border: 2px solid rgba(0, 242, 255, 0.4) !important;
+    background: rgba(0, 242, 255, 0.03) !important;
+    border-radius: 12px !important;
+    text-align: center !important;
+}
+
+.cumbre-main-block [data-testid="stMetricValue"] {
+    font-size: 2.2rem !important;
+    font-weight: 700 !important;
+    color: #00f2ff !important;
+}
+
+.cumbre-main-block [data-testid="stMetricValue"]>div,
+.cumbre-main-block [data-testid="stMetricLabel"] {
+    display: flex !important;
+    justify-content: center !important;
+    text-align: center !important;
+    width: 100% !important;
+}
+
+/* Azul Cumbre Progress Bar Styling */
+.azul-cumbre-bar .stProgress>div>div>div>div {
+    background-image: linear-gradient(to right, #0088ff, #00f2ff) !important;
+    box-shadow: 0 0 15px rgba(0, 242, 255, 0.5) !important;
+}
+
+/* Welcome Branding */
+.welcome-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 3rem;
+    text-align: center;
+}
+
+.welcome-logo {
+    margin-bottom: 2rem;
+    transition: transform 0.5s ease;
+}
+
+.welcome-logo:hover {
+    transform: scale(1.05);
+}
+
+/* Glassmorphism Title */
+.title-container {
+    background: rgba(255, 255, 255, 0.03);
+    backdrop-filter: blur(15px);
+    border-radius: 20px;
+    padding: 2.5rem;
+    text-align: center;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    margin-bottom: 2rem;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+}
+
+h1 {
+    font-weight: 900 !important;
+    font-size: 3.5rem !important;
+    letter-spacing: -2px;
+    background: linear-gradient(135deg, #ffffff 0%, #a0a0a0 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 0.5rem !important;
+    text-align: center;
+}
+
+.quote-text {
+    font-style: italic;
+    color: #00ff88;
+    font-size: 1.8rem;
+    font-weight: 600;
+    margin-top: 1.5rem;
+    margin-bottom: 2rem;
+    opacity: 1;
+    text-shadow: 0 0 15px rgba(0, 255, 136, 0.4);
+    line-height: 1.4;
+}
+
+/* Metric Cards */
+.stMetric {
+    background: rgba(255, 255, 255, 0.03) !important;
+    padding: 2rem !important;
+    border-radius: 20px !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1) !important;
+}
+
+[data-testid="stMetricValue"] {
+    font-size: 2.2rem !important;
+    font-weight: 800 !important;
+    line-height: 1.2 !important;
+}
+
+[data-testid="stMetricLabel"] {
+    font-size: 1.1rem !important;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+/* PA Acumulada Dynamic Colors & Borders */
+.metric-red {
+    border: 2px solid rgba(255, 75, 75, 0.4) !important;
+    box-shadow: 0 0 10px rgba(255, 75, 75, 0.1) !important;
+}
+
+.metric-red [data-testid="stMetricValue"] {
+    color: #ff4b4b !important;
+}
+
+.metric-warning {
+    border: 2px solid rgba(255, 165, 0, 0.4) !important;
+    box-shadow: 0 0 10px rgba(255, 165, 0, 0.1) !important;
+}
+
+.metric-warning [data-testid="stMetricValue"] {
+    color: #ffa500 !important;
+}
+
+.metric-green {
+    border: 2px solid rgba(0, 255, 136, 0.5) !important;
+    box-shadow: 0 0 15px rgba(0, 255, 136, 0.2) !important;
+}
+
+.metric-green [data-testid="stMetricValue"] {
+    color: #00ff88 !important;
+    text-shadow: 0 0 15px rgba(0, 255, 136, 0.2);
+}
+
+/* Centurion Specific Layouts */
+.metric-centurion-main {
+    border: 2px solid rgba(0, 242, 255, 0.3) !important;
+    background: rgba(0, 242, 255, 0.02) !important;
+    padding: 1.5rem !important;
+}
+
+.metric-centurion-main [data-testid="stMetricValue"] {
+    font-size: 2.2rem !important;
+    /* Stable size */
+    font-weight: 700 !important;
+    color: #00f2ff !important;
+    white-space: nowrap;
+}
+
+.metric-centurion-level {
+    padding: 1.2rem !important;
+    border: 1px solid rgba(160, 160, 160, 0.2) !important;
+    background: rgba(255, 255, 255, 0.01) !important;
+}
+
+.metric-centurion-level [data-testid="stMetricValue"] {
+    font-size: 1.6rem !important;
+    font-weight: 700 !important;
+    color: #e0e0e0 !important;
+}
+
+.metric-centurion-level [data-testid="stMetricLabel"] {
+    font-size: 0.8rem !important;
+}
+
+/* Stable alignment without negative margins */
+
+.centurion-levels-container {
+    margin-top: 1rem !important;
+}
+
+.centurion-levels-container h3 {
+    margin-bottom: 0.5rem !important;
+    color: #a0a0a0;
+}
+
+/* Border Modifiers */
+.border-neon-green {
+    border: 2px solid #00ff88 !important;
+    box-shadow: 0 0 15px rgba(0, 255, 136, 0.3) !important;
+}
+
+/* Gold & Black Premium (Graduación) */
+.metric-gold {
+    border: 2px solid #ffd700 !important;
+    background: linear-gradient(135deg, rgba(255, 215, 0, 0.1) 0%, rgba(0, 0, 0, 0.2) 100%) !important;
+    border-radius: 12px !important;
+    box-shadow: 0 4px 15px rgba(255, 215, 0, 0.2) !important;
+}
+
+.metric-gold [data-testid="stMetricValue"] {
+    color: #ffd700 !important;
+    text-shadow: 0 0 10px rgba(255, 215, 0, 0.5) !important;
+}
+
+/* Gold Progress Bar */
+.gold-bar .stProgress>div>div>div>div {
+    background-image: linear-gradient(to right, #b8860b, #ffd700, #b8860b) !important;
+    box-shadow: 0 0 15px rgba(255, 215, 0, 0.4) !important;
+}
+
+/* Red Blinking Alert */
+.blinking-alert {
+    animation: blinker 1.5s linear infinite;
+    background: rgba(255, 0, 0, 0.2) !important;
+    border: 2px solid #ff4b4b !important;
+    color: #ff4b4b !important;
+    font-weight: bold !important;
+    padding: 15px !important;
+    border-radius: 12px !important;
+    text-align: center !important;
+}
+
+@keyframes blinker {
+    50% {
+        opacity: 0.3;
+    }
+}
+
+.border-orange {
+    border: 3px solid #ff8800 !important;
+    border-radius: 15px !important;
+    padding: 10px !important;
+    background: rgba(255, 136, 0, 0.1) !important;
+}
+
+.border-orange-container {
+    border: 2px solid #ff8800 !important;
+    background: rgba(255, 136, 0, 0.05) !important;
+}
+
+.border-bright-red {
+    border: 2px solid #ff4b4b !important;
+    box-shadow: 0 0 15px rgba(255, 75, 75, 0.3) !important;
+}
+
+/* Neutral Metrics Medium */
+.metric-neutral-med [data-testid="stMetricValue"] {
+    font-size: 1.5rem !important;
+    color: #ffffff !important;
+}
+
+.metric-neutral-med [data-testid="stMetricLabel"] {
+    font-size: 0.9rem !important;
+}
+
+/* Sidebar Branding */
+[data-testid="stSidebar"] {
+    background-color: #161b22 !important;
+    border-right: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.sidebar-logo-container {
+    padding: 1rem;
+    text-align: center;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    margin-bottom: 2rem;
+}
+
+/* Custom Progress Bar - Thick & Glowing */
+.stProgress>div>div>div>div {
+    height: 35px !important;
+    border-radius: 17px !important;
+    box-shadow: 0 0 15px rgba(0, 255, 136, 0.4);
+}
+
+/* Default Green Bar */
+.green-bar .stProgress>div>div>div>div {
+    background: linear-gradient(90deg, #00ff88 0%, #00cc6e 100%) !important;
+}
+
+/* Cyan/Blue Bar for Centurion */
+.cyan-bar .stProgress>div>div>div>div {
+    background: linear-gradient(90deg, #00f2ff 0%, #0072ff 100%) !important;
+    box-shadow: 0 0 15px rgba(0, 242, 255, 0.4) !important;
+}
+
+.stProgress {
+    height: 35px !important;
+    margin: 1.5rem 0 !important;
+}
+
+/* Custom Progress Bar Labels */
+.progress-label-container {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 2.5rem;
+    margin-bottom: 5px;
+    font-weight: 700;
+    font-size: 1.1rem;
+    color: #a0a0a0;
+}
+
+.progress-value-floating {
+    position: relative;
+    font-weight: 900;
+    color: #00ff88;
+    font-size: 1.2rem;
+    height: 30px;
+}
+
+.progress-indicator-text {
+    position: absolute;
+    transform: translateX(-50%);
+    white-space: nowrap;
+    background: rgba(0, 255, 136, 0.1);
+    padding: 2px 10px;
+    border-radius: 10px;
+    border: 1px solid rgba(0, 255, 136, 0.2);
+}
+
+.progress-sub-label {
+    margin-top: 5px;
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.9rem;
+    color: #666;
+    font-weight: 600;
+}
+
+/* Buttons */
+.stButton>button {
+    border-radius: 12px !important;
+    height: 3.5em !important;
+    background: linear-gradient(135deg, #00ff88 0%, #00cc6e 100%) !important;
+    color: #000000 !important;
+    font-weight: 700 !important;
+    border: none !important;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    box-shadow: 0 4px 15px rgba(0, 255, 136, 0.2);
+}
+
+.stButton>button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(0, 255, 136, 0.4) !important;
+}
+
+/* Back Button Specific */
+.back-button-container {
+    margin-top: 4rem;
+    padding-top: 2rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}

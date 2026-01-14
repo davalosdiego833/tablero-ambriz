@@ -674,15 +674,15 @@ def show_dashboard():
             st.markdown('</div>', unsafe_allow_html=True)
         with c2:
             st.markdown(f'<div class="{progress_color_class}">', unsafe_allow_html=True)
-            st.metric("PA Acumulada", f"${pa_acumulada:,.2f}")
+            st.metric("Prima Anualizada Acumulada", f"${pa_acumulada:,.2f}")
             st.markdown('</div>', unsafe_allow_html=True)
         with c3:
             st.markdown('<div class="metric-neutral">', unsafe_allow_html=True)
             # Security Shield for Faltante
             if pa_faltante <= 0:
-                st.metric("PA Faltante", "$0.00", help="¡Meta MDRT lograda! 🎉")
+                st.metric("Prima Anualizada Faltante", "$0.00", help="¡Meta MDRT lograda! 🎉")
             else:
-                st.metric("PA Faltante", f"${pa_faltante:,.2f}")
+                st.metric("Prima Anualizada Faltante", f"${pa_faltante:,.2f}")
             st.markdown('</div>', unsafe_allow_html=True)
 
         st.markdown("---")
@@ -690,35 +690,38 @@ def show_dashboard():
         st.markdown(f"""
             <div class="green-bar">
                 <div class="progress-label-container">
-                    <span>Tu Avance Financiero</span>
+                    <span>Tu Avance Financiero (Prima Anualizada)</span>
                 </div>
                 <div class="progress-value-floating">
                     <div class="progress-indicator-text" style="left: {indicator_pos}%;">${pa_acumulada:,.2f}</div>
                 </div>
             </div>
         """, unsafe_allow_html=True)
-        # Security Shield: min(val, 1.0)
         progress_val = min(float(pa_acumulada / goal), 1.0) if goal > 0 else 0.0
         st.progress(progress_val)
-        st.markdown(f"""
-            <div class="progress-sub-label">
+        
+        status_txt = "¡Meta Lograda! 🎉" if pa_acumulada >= goal else f"Falta: ${max(0, goal - pa_acumulada):,.2f}"
+        st.markdown(f'''
+            <div style="display: flex; justify-content: space-between; font-size: 0.9em; margin-top: -10px;">
                 <span>$0</span>
+                <span style="font-weight: bold;">{status_txt}</span>
                 <span>Meta: ${goal:,.0f}</span>
             </div>
-        """, unsafe_allow_html=True)
+        ''', unsafe_allow_html=True)
         
         # Time Progress
         time_progress = min(mes_actual / 12, 1.0)
         st.markdown("<br>", unsafe_allow_html=True)
         st.markdown('<div class="progress-label-container"><span>Tu Avance en el Tiempo</span></div>', unsafe_allow_html=True)
         st.progress(float(time_progress) if pd.notna(time_progress) else 0.0)
-        st.markdown(f"""
-            <div class="progress-sub-label">
+        
+        st.markdown(f'''
+            <div style="display: flex; justify-content: space-between; font-size: 0.9em; margin-top: -10px;">
                 <span>Mes 0</span>
-                <span>Mes 12 (Cierre)</span>
+                <span style="font-weight: bold; color: #00ff88;">Mes {mes_actual} de 12 ({time_progress*100:.0f}%)</span>
+                <span>Cierre</span>
             </div>
-            <p style='text-align: right; color: #00ff88; font-weight: bold;'>Estás en el mes {mes_actual} de 12 ({time_progress*100:.0f}%)</p>
-        """, unsafe_allow_html=True)
+        ''', unsafe_allow_html=True)
 
     # --- LEGION CENTURION LAYOUT ---
     elif campaign.lower().replace(' ', '_') == 'legion_centurion':
@@ -775,25 +778,29 @@ def show_dashboard():
         # Security Shield: min(val, 1.0)
         prog_val = min(float(total_polizas / meta_polizas), 1.0) if meta_polizas > 0 else 0.0
         st.progress(prog_val)
-        st.markdown(f"""
-            <div class="progress-sub-label">
+        
+        status_txt = "¡Meta Lograda! 🎉" if total_polizas >= meta_polizas else f"Faltan: {max(0, meta_polizas - total_polizas):,.1f}"
+        st.markdown(f'''
+            <div style="display: flex; justify-content: space-between; font-size: 0.9em; margin-top: -10px;">
                 <span>0</span>
-                <span>Meta: {meta_polizas} ({"Meta lograda" if total_polizas >= meta_polizas else f"Faltan: {faltante_meta:,.1f}"})</span>
+                <span style="font-weight: bold;">{status_txt}</span>
+                <span>Meta: {meta_polizas}</span>
             </div>
-        """, unsafe_allow_html=True)
+        ''', unsafe_allow_html=True)
 
         # Time Progress (shared style)
         time_progress = min(mes_actual / 12, 1.0)
         st.markdown("<br>", unsafe_allow_html=True)
         st.markdown('<div class="progress-label-container"><span>Tu Avance en el Tiempo</span></div>', unsafe_allow_html=True)
         st.progress(float(time_progress) if pd.notna(time_progress) else 0.0)
-        st.markdown(f"""
-            <div class="progress-sub-label">
+        
+        st.markdown(f'''
+            <div style="display: flex; justify-content: space-between; font-size: 0.9em; margin-top: -10px;">
                 <span>Mes 0</span>
-                <span>Mes 12 (Cierre)</span>
+                <span style="font-weight: bold; color: #00ff88;">Mes {mes_actual} de 12 ({time_progress*100:.0f}%)</span>
+                <span>Cierre</span>
             </div>
-            <p style='text-align: right; color: #00ff88; font-weight: bold;'>Estás en el mes {mes_actual} de 12 ({time_progress*100:.0f}%)</p>
-        """, unsafe_allow_html=True)
+        ''', unsafe_allow_html=True)
 
     # --- CONVENCIONES LAYOUT ---
     elif campaign.lower().replace(' ', '_') == 'convenciones':
@@ -824,7 +831,7 @@ def show_dashboard():
         c1, c2, c3 = st.columns(3)
         with c1:
             st.markdown('<div class="metric-neutral">', unsafe_allow_html=True)
-            st.metric("Comisión Vida", f"${comision_vida:,.2f}")
+            st.metric("Créditos Vida", f"${comision_vida:,.2f}")
             st.markdown('</div>', unsafe_allow_html=True)
         with c2:
             st.markdown('<div class="metric-neutral">', unsafe_allow_html=True)
@@ -832,7 +839,7 @@ def show_dashboard():
             st.markdown('</div>', unsafe_allow_html=True)
         with c3:
             st.markdown('<div class="metric-green">', unsafe_allow_html=True)
-            st.metric("Comisiones Totales", f"${comisiones_totales:,.2f}")
+            st.metric("Créditos Totales", f"${comisiones_totales:,.2f}")
             st.markdown('</div>', unsafe_allow_html=True)
             
         c4, c5, c6 = st.columns(3)
@@ -887,8 +894,15 @@ def show_dashboard():
             st.markdown(f"#### {p_titles[i]}")
             st.progress(float(progress) if pd.notna(progress) else 0.0)
             faltante_val = max(0, target - comisiones_totales)
-            txt_faltante = "¡Meta Lograda!" if faltante_val <= 0 else f"Faltante: ${faltante_val:,.2f}"
-            st.markdown(f"<p style='text-align: right; color: #00ff88;'>Meta: ${target:,.2f} | {txt_faltante}</p>", unsafe_allow_html=True)
+            txt_faltante = "¡Meta Lograda! 🎉" if faltante_val <= 0 else f"Faltante: ${faltante_val:,.2f}"
+            
+            st.markdown(f'''
+                <div style="display: flex; justify-content: space-between; font-size: 0.9em; margin-top: -10px;">
+                    <span>$0</span>
+                    <span style="font-weight: bold; color: #00ff88;">{txt_faltante}</span>
+                    <span>Meta: ${target:,.0f}</span>
+                </div>
+            ''', unsafe_allow_html=True)
             st.markdown("<br>", unsafe_allow_html=True)
 
         # BLOQUE 4: Sección de Destinos (Centrado y Orden Correcto)
@@ -996,13 +1010,15 @@ def show_dashboard():
         # Security Shield: min(val, 1.0)
         prog_shield = min(float(progress_pct), 1.0) if pd.notna(progress_pct) else 0.0
         st.progress(prog_shield)
-        st.markdown(f"""
-            <div class="progress-sub-label">
+        
+        status_txt = "¡Meta Lograda! 🎉" if polizas_totales >= meta_acumulada else f"Avance: {polizas_totales:,.1f} de {meta_acumulada}"
+        st.markdown(f'''
+            <div style="display: flex; justify-content: space-between; font-size: 0.9em; margin-top: -10px;">
                 <span>0</span>
-                <span>Meta Acumulada: {meta_acumulada}</span>
+                <span style="font-weight: bold; color: #00f2ff;">{status_txt} ({progress_pct*100:.1f}%)</span>
+                <span>Meta: {meta_acumulada}</span>
             </div>
-            <p style='text-align: right; color: #00f2ff; font-weight: bold;'>{"¡Meta Lograda!" if polizas_totales >= meta_acumulada else f"Avance: {polizas_totales:,.1f} de {meta_acumulada} ({progress_pct*100:.1f}%)"}</p>
-        """, unsafe_allow_html=True)
+        ''', unsafe_allow_html=True)
 
         # --- LEGAL FOOTER ---
         st.markdown("<br><br>", unsafe_allow_html=True)
@@ -1028,6 +1044,13 @@ def show_dashboard():
         comisiones = pd.to_numeric(row.get('Comisones', 0), errors='coerce')
         if pd.isna(comisiones): comisiones = 0
         produccion_mes = row.get('Produccion_Mes', row.get('Polizas_Mes', 0)) # fallback check
+        
+        # Extract and format target date
+        fecha_limite = row.get('Limite_Logro_Meta', 'No disponible')
+        if pd.notna(fecha_limite) and isinstance(fecha_limite, (pd.Timestamp, datetime.date, datetime.datetime)):
+            fecha_limite_fmt = fecha_limite.strftime('%d/%m/%Y')
+        else:
+            fecha_limite_fmt = str(fecha_limite)
         
         # 1. Logic for Corte and Events
         # Calculate when month 12 falls based on current month and date
@@ -1067,14 +1090,18 @@ def show_dashboard():
             # Dynamic Info Based on Phase
             if mes_asesor <= 12:
                 # CAREER PHASE: Focus on production
-                c1, c2 = st.columns(2)
+                c1, c2, lmf = st.columns(3)
                 with c1:
                     st.markdown(f'<div class="metric-gold">', unsafe_allow_html=True)
                     st.metric("Pólizas Totales", f"{polizas_totales:,.1f}")
                     st.markdown('</div>', unsafe_allow_html=True)
                 with c2:
                     st.markdown(f'<div class="metric-gold">', unsafe_allow_html=True)
-                    st.metric("Ingresos Generados", f"${comisiones:,.2f}")
+                    st.metric("Comisiones Acumuladas", f"${comisiones:,.2f}")
+                    st.markdown('</div>', unsafe_allow_html=True)
+                with lmf:
+                    st.markdown(f'<div class="metric-gold">', unsafe_allow_html=True)
+                    st.metric("Fecha Límite de Meta", fecha_limite_fmt)
                     st.markdown('</div>', unsafe_allow_html=True)
             else:
                 # MAINTENANCE PHASE: Show event info
@@ -1086,7 +1113,7 @@ def show_dashboard():
                     st.markdown('</div>', unsafe_allow_html=True)
                 with c2:
                     st.markdown(f'<div class="metric-gold">', unsafe_allow_html=True)
-                    st.metric("Ingresos Generados", f"${comisiones:,.2f}")
+                    st.metric("Comisiones Acumuladas", f"${comisiones:,.2f}")
                     st.markdown('</div>', unsafe_allow_html=True)
                 with c3:
                     st.markdown(f'<div class="metric-gold">', unsafe_allow_html=True)
@@ -1136,8 +1163,15 @@ def show_dashboard():
         st.markdown('<div class="gold-bar">', unsafe_allow_html=True)
         # Security Shield: already has min(val, 1.0) in line 1134
         st.progress(float(prog_normal) if pd.notna(prog_normal) else 0.0)
-        txt_norm = "¡Meta Lograda!" if polizas_totales >= meta_normal else f"Avance: {polizas_totales:,.1f} / {meta_normal} ({prog_normal*100:.1f}%)"
-        st.markdown(f"<p style='text-align: right; color: #ffd700; font-weight: bold;'>{txt_norm}</p>", unsafe_allow_html=True)
+        
+        txt_norm = "¡Meta Lograda! 🎉" if polizas_totales >= meta_normal else f"Avance: {polizas_totales:,.1f} ({prog_normal*100:.1f}%)"
+        st.markdown(f'''
+            <div style="display: flex; justify-content: space-between; font-size: 0.9em; margin-top: -10px;">
+                <span>0</span>
+                <span style="font-weight: bold; color: #ffd700;">{txt_norm}</span>
+                <span>Meta: {meta_normal}</span>
+            </div>
+        ''', unsafe_allow_html=True)
         st.markdown('</div>', unsafe_allow_html=True)
         
         # Meta 2: Graduación con Honores (Meta Fija 48)
@@ -1147,8 +1181,15 @@ def show_dashboard():
         st.markdown('<div class="gold-bar">', unsafe_allow_html=True)
         # Security Shield: already has min(val, 1.0) in line 1144
         st.progress(float(prog_honores) if pd.notna(prog_honores) else 0.0)
-        txt_hon = "¡Meta Lograda!" if polizas_totales >= meta_honores else f"Avance: {polizas_totales:,.1f} / {meta_honores} ({prog_honores*100:.1f}%)"
-        st.markdown(f"<p style='text-align: right; color: #ffd700; font-weight: bold;'>{txt_hon}</p>", unsafe_allow_html=True)
+        
+        txt_hon = "¡Meta Lograda! 🎉" if polizas_totales >= meta_honores else f"Avance: {polizas_totales:,.1f} ({prog_honores*100:.1f}%)"
+        st.markdown(f'''
+            <div style="display: flex; justify-content: space-between; font-size: 0.9em; margin-top: -10px;">
+                <span>0</span>
+                <span style="font-weight: bold; color: #ffd700;">{txt_hon}</span>
+                <span>Meta: {meta_honores}</span>
+            </div>
+        ''', unsafe_allow_html=True)
         st.markdown('</div>', unsafe_allow_html=True)
 
         # 4. Legal Footer

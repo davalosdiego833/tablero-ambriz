@@ -934,6 +934,13 @@ def show_dashboard():
         trimestre = row.get('Trimestre', 1)
         fecha_con = row.get('Fecha_Conexion', 'N/A')
         
+        # Extract and format target date
+        fecha_limite = row.get('Limite_Logro_Meta', row.get('Fecha Limite', row.get('Vencimiento', 'No disponible')))
+        if pd.notna(fecha_limite) and isinstance(fecha_limite, (pd.Timestamp, datetime.date, datetime.datetime)):
+            fecha_limite_fmt = fecha_limite.strftime('%d/%m/%Y')
+        else:
+            fecha_limite_fmt = str(fecha_limite)
+        
         # Auditoría de Inicio (Mes 1, 2 o 3)
         alert_mode = False
         if mes_asesor in [1, 2, 3]:
@@ -979,7 +986,7 @@ def show_dashboard():
             with c3:
                 st.metric("Trimestre Actual", f"{trimestre}")
             with c4:
-                st.metric("Antigüedad", fecha_con)
+                st.metric("Fecha Límite de Meta", fecha_limite_fmt)
             st.markdown('</div>', unsafe_allow_html=True)
             
         with col_donut:

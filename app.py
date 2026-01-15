@@ -9,8 +9,8 @@ import base64
 
 # Page Configuration
 st.set_page_config(
-    page_title="Antigravity - Panel Premium",
-    page_icon="🚀",
+    page_title="Ambriz Asesores",
+    page_icon="assets/logos/empresa/ambriz_logo.png",
     layout="wide",
     initial_sidebar_state="expanded"
 )

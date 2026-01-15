@@ -658,7 +658,7 @@ def show_dashboard():
         elif campaign.lower().replace(' ', '_') == 'legion_centurion':
             st.info("Legión Centurión premia tu consistencia y volumen de pólizas. ¡Llega a las 48 y conviértete en una leyenda!")
         elif campaign.lower().replace(' ', '_') == 'convenciones':
-            st.markdown(f"<p style='color: #00ff88; font-size: 1.2rem; font-weight: 700; background: rgba(0,255,136,0.1); padding: 10px; border-radius: 10px;'>Dato importante: Para clasificar a convenciones necesitamos un mínimo de 30 pólizas y un mínimo de $550,000 de comisiones.</p>", unsafe_allow_html=True)
+            st.markdown(f"<p style='color: #00ff88; font-size: 1.2rem; font-weight: 700; background: rgba(0,255,136,0.1); padding: 10px; border-radius: 10px;'>Dato importante: Para clasificar a convenciones necesitamos un mínimo de 30 pólizas y un mínimo de $588,500 de comisiones.</p>", unsafe_allow_html=True)
         elif campaign.lower().replace(' ', '_') == 'camino_cumbre':
             st.info("Camino a la Cumbre es un programa de 18 meses diseñado para potenciar tu arranque y consolidar tu carrera. ¡Escala hacia la excelencia!")
         elif campaign.lower().replace(' ', '_') == 'graduacion':
@@ -837,7 +837,7 @@ def show_dashboard():
         if pd.isna(lugar): lugar = 0
         
         # Logic for Estatus Viaje
-        is_qualified = (lugar <= 480 and polizas >= 30 and comisiones_totales >= 550000)
+        is_qualified = (lugar <= 480 and polizas >= 30 and comisiones_totales >= 588500)
         estatus_viaje = "✅ DENTRO DE RANGO" if is_qualified else "❌ POR CALIFICAR"
         status_class = "border-neon-green" if is_qualified else "border-bright-red"
         

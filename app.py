@@ -6,14 +6,7 @@ import plotly.graph_objects as go
 import random
 import json
 import base64
-
-# Page Configuration
-st.set_page_config(
-    page_title="Ambriz Asesores",
-    page_icon="assets/logos/empresa/ambriz_logo.png",
-    layout="wide",
-    initial_sidebar_state="expanded"
-)
+from PIL import Image
 
 # Constants
 BASE_PATH = os.path.dirname(os.path.abspath(__file__))
@@ -24,6 +17,19 @@ LOGOS_PATH = os.path.join(ASSETS_PATH, "logos", "campanas")
 DESTINOS_PATH = os.path.join(ASSETS_PATH, "destinos")
 COMPANY_LOGO = os.path.join(ASSETS_PATH, "logos", "empresa", "ambriz_logo.png")
 THEME_BANNER = os.path.join(ASSETS_PATH, "themes", "current_theme.png")
+
+# Page Configuration
+try:
+    favicon = Image.open(COMPANY_LOGO)
+except Exception:
+    favicon = "🚀"
+
+st.set_page_config(
+    page_title="Ambriz Asesores",
+    page_icon=favicon,
+    layout="wide",
+    initial_sidebar_state="expanded"
+)
 
 def get_theme_data(theme_file):
     try:

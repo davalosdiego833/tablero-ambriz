@@ -1,5 +1,6 @@
 import streamlit as st
 import datetime
+from datetime import datetime, date
 import pandas as pd
 import os
 import plotly.graph_objects as go
@@ -627,7 +628,7 @@ def show_dashboard():
     row = advisor_data.iloc[0]
     fecha = row.get('Fecha_Corte', 'No disponible')
     # Definitive Patch: Ensuring module-level access and NaT checks
-    if pd.notna(fecha) and isinstance(fecha, (pd.Timestamp, datetime.date, datetime.datetime)):
+    if pd.notna(fecha) and isinstance(fecha, (pd.Timestamp, date, datetime)):
         fecha_corte = fecha.strftime('%d/%m/%Y')
     else:
         fecha_corte = "No disponible"
@@ -673,7 +674,12 @@ def show_dashboard():
         progress_color_class = get_progress_color(progress_pct)
         
         st.divider()
-        c1, c2, c3 = st.columns(3)
+        
+        # Monthly meta calculation (Using Excel month for precise math)
+        meses_restantes = max(1, 12 - int(mes_actual) + 1)
+        meta_mensual = pa_faltante / meses_restantes if pa_faltante > 0 else 0
+        
+        c1, c2, c3, c4 = st.columns(4)
         with c1:
             st.markdown('<div class="metric-neutral">', unsafe_allow_html=True)
             st.metric("Meta MDRT", f"${goal:,.0f}")
@@ -689,6 +695,10 @@ def show_dashboard():
                 st.metric("Prima Anualizada Faltante", "$0.00", help="¡Meta MDRT lograda! 🎉")
             else:
                 st.metric("Prima Anualizada Faltante", f"${pa_faltante:,.2f}")
+            st.markdown('</div>', unsafe_allow_html=True)
+        with c4:
+            st.markdown('<div class="metric-neutral">', unsafe_allow_html=True)
+            st.metric("Promedio Mensual Necesario", f"${meta_mensual:,.2f}", help=f"Para cumplir la meta a Diciembre, considerando que estamos en el mes {mes_actual}.")
             st.markdown('</div>', unsafe_allow_html=True)
 
         st.markdown("---")
@@ -942,7 +952,7 @@ def show_dashboard():
         
         # Extract and format target date
         fecha_limite = row.get('Limite_Logro_Meta', row.get('Fecha Limite', row.get('Vencimiento', 'No disponible')))
-        if pd.notna(fecha_limite) and isinstance(fecha_limite, (pd.Timestamp, datetime.date, datetime.datetime)):
+        if pd.notna(fecha_limite) and isinstance(fecha_limite, (pd.Timestamp, date, datetime)):
             fecha_limite_fmt = fecha_limite.strftime('%d/%m/%Y')
         else:
             fecha_limite_fmt = str(fecha_limite)
@@ -964,8 +974,8 @@ def show_dashboard():
             status_class = "border-neon-green" if "EN META" in estatus_meta else "border-bright-red"
             
         # Formatting date
-        if isinstance(fecha_con, (datetime.date, datetime.datetime, pd.Timestamp)):
-            if pd.notna(fecha_con) and isinstance(fecha_con, (pd.Timestamp, datetime.date, datetime.datetime)):
+        if isinstance(fecha_con, (date, datetime, pd.Timestamp)):
+            if pd.notna(fecha_con) and isinstance(fecha_con, (pd.Timestamp, date, datetime)):
                 fecha_con = fecha_con.strftime('%d/%m/%Y')
             else:
                 fecha_con = "No disponible"
@@ -1060,14 +1070,14 @@ def show_dashboard():
         
         # Extract and format target date
         fecha_limite = row.get('Limite_Logro_Meta', 'No disponible')
-        if pd.notna(fecha_limite) and isinstance(fecha_limite, (pd.Timestamp, datetime.date, datetime.datetime)):
+        if pd.notna(fecha_limite) and isinstance(fecha_limite, (pd.Timestamp, date, datetime)):
             fecha_limite_fmt = fecha_limite.strftime('%d/%m/%Y')
         else:
             fecha_limite_fmt = str(fecha_limite)
         
         # 1. Logic for Corte and Events
         # Calculate when month 12 falls based on current month and date
-        current_date = datetime.date.today()
+        current_date = date.today()
         # Month 12 is (12 - mes_asesor) months away
         months_to_12 = 12 - mes_asesor
         mes_12_month = (current_date.month + months_to_12 - 1) % 12 + 1

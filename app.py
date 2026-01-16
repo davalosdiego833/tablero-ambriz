@@ -991,18 +991,14 @@ def show_dashboard():
             # Use specific container class for alert or standard status
             container_css = "border-orange-container" if alert_mode else f"{status_class}-container"
             st.markdown(f'<div class="cumbre-main-block {container_css}">', unsafe_allow_html=True)
-            c1, c2 = st.columns(2)
+            c1, c2, c3 = st.columns(3)
             with c1:
                 st.metric("Pólizas Totales", f"{polizas_totales:,.1f}")
             with c2:
                 # Use standard metric but the container border controlled by alert logic
                 st.metric("Estatus Actual", estatus_meta)
-            
-            c3, c4 = st.columns(2)
             with c3:
                 st.metric("Trimestre Actual", f"{trimestre}")
-            with c4:
-                st.metric("Fecha Límite de Meta", fecha_limite_fmt)
             st.markdown('</div>', unsafe_allow_html=True)
             
         with col_donut:

@@ -672,7 +672,7 @@ def show_dashboard():
 
     # --- MDRT LAYOUT ---
     if campaign.lower().replace(' ', '_') == 'mdrt':
-        goal = 1698400
+        goal = 1810400
         pa_acumulada = row.get('PA_Acumulada', 0)
         pa_faltante = row.get('PA_Faltante_Miembro', 0)
         mes_actual = row.get('Mes_Actual', 1)

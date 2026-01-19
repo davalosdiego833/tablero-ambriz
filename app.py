@@ -587,13 +587,19 @@ def show_campaign_selector():
         original_dir = find_original_dir(camp_display)
         with cols[i]:
             st.markdown('<div class="selector-item">', unsafe_allow_html=True)
-            logo_file = os.path.join(LOGOS_PATH, f"{original_dir}.png")
-            if not os.path.exists(logo_file):
-                 # check specialized "mdrt_logo.png" vs just "mdrt.png"
-                 logo_file = os.path.join(LOGOS_PATH, f"{original_dir}_logo.png")
             
-            if os.path.exists(logo_file):
-                st.image(logo_file, width=250) 
+            # Mapeo de rutas exactas solicitado por el usuario
+            logo_mapping = {
+                "legion_centurion": "assets/logos/campanas/legion_centurion.png",
+                "mdrt": "assets/logos/campanas/mdrt_logo.png",
+                "convenciones": "assets/logos/campanas/convenciones.png",
+                "camino_cumbre": "assets/logos/campanas/camino_cumbre.png",
+                "graduacion": "assets/logos/campanas/graduacion.png"
+            }
+            logo_path = logo_mapping.get(original_dir)
+            
+            if logo_path and os.path.exists(logo_path):
+                st.image(logo_path, width=250) 
             else:
                 st.markdown(f"<h3 style='text-align:center;'>{camp_display.upper()}</h3>", unsafe_allow_html=True)
             

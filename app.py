@@ -512,8 +512,8 @@ def show_welcome():
     # 3. Centro de Avisos Inteligente (Fijos + Dinámicos)
     # A. Avisos FIJOS (Metas Anuales)
     avisos_fijos = [
-        "🛡️ <b>Legión Centurión:</b> Premia tu consistencia. ¡Llega a las 48 semanas y conviértete en leyenda!",
-        "🏆 <b>Meta MDRT:</b> La meta es de $1,698,400 PA. ¡Cada póliza cuenta!",
+        "🛡️ <b>Legión Centurión:</b> Premia tu consistencia. ¡Llega a las 48 pólizas y conviértete en leyenda!",
+        "🏆 <b>Meta MDRT:</b> La meta es de $1,810,400 PA. ¡Cada póliza cuenta!",
         "🎓 <b>Graduación:</b> Las metas de Normal (36) y Honor (48) siguen vigentes."
     ]
 

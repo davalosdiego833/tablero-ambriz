@@ -509,42 +509,16 @@ def show_welcome():
     </div>
     """, unsafe_allow_html=True)
 
-    # 3. Centro de Avisos Inteligente (Fijos + Dinámicos)
-    # A. Avisos FIJOS (Metas Anuales)
-    avisos_fijos = [
+    # 3. Centro de Avisos Inteligente (Prioritarios 2026)
+    avisos_prioritarios = [
+        "⚽ <b>¡Nueva Campaña: Goliza de Pólizas! (Ene - Feb):</b> Gana un balón TRIONDA 2026 (primeras 300 pólizas), playera de México o el combo Playera + Lentes Ray-Ban Meta. ¡Consulta las bases!",
+        "💳 <b>Meses Sin Intereses (Ene - Mar):</b> Promoción vigente tanto para Nuevos Negocios como para Renovaciones.",
+        "🏔️ <b>Actualización de Premios:</b> Se renovaron las bases y premios para 'Camino a la Cumbre' y 'Campaña RDA'. ¡Revísalas!",
         "🛡️ <b>Legión Centurión:</b> Premia tu consistencia. ¡Llega a las 48 pólizas y conviértete en leyenda!",
-        "🏆 <b>Meta MDRT:</b> La meta es de $1,810,400 PA. ¡Cada póliza cuenta!",
-        "🎓 <b>Graduación:</b> Las metas de Normal (36) y Honor (48) siguen vigentes."
+        "🏆 <b>Meta MDRT 2026:</b> La nueva meta es de $1,810,400 PA. ¡Arrancamos con todo!"
     ]
 
-    # B. Avisos DINÁMICOS (Relacionados con Mes/Carrera)
-    avisos_mensuales = []
-    if "abril" in theme_file or "nino" in theme_file:
-        avisos_mensuales = [
-            "🧸 <b>Mes del Niño:</b> Recuérdales a los padres que la mejor herencia es la educación garantizada.",
-            "🚀 Protege el futuro de los pequeños gigantes."
-        ]
-    elif "diciembre" in theme_file or "navidad" in theme_file:
-        avisos_mensuales = [
-            "🎄 <b>Cierre Anual:</b> El mejor regalo para una familia es una póliza entregada.",
-            "❄️ Que el espíritu navideño te impulse a cerrar tu meta anual con fuerza."
-        ]
-    elif "julio" in theme_file or "verano" in theme_file:
-        avisos_mensuales = [
-            "☀️ <b>Mitad de Año:</b> Es el momento perfecto para revisar tu proyección y ajustar velas.",
-            "🏖️ Mientras tus clientes descansan, tú aseguras su tranquilidad."
-        ]
-    elif "septiembre" in theme_file or "mexico" in theme_file:
-        avisos_mensuales = ["🇲🇽 <b>Mes Patrio:</b> Celebra protegiendo el patrimonio de las familias mexicanas."]
-    elif "noviembre" in theme_file or "muertos" in theme_file:
-        avisos_mensuales = ["🕯️ <b>Trascendencia:</b> Nuestra labor es asegurar que el amor perdure más allá de la vida."]
-    else:
-        # Default
-        avisos_mensuales = ["⚡ ¡Es un excelente mes para romper tus récords!"]
-
-    # C. Lógica de Fusión Inteligente (Novedad primero)
-    lista_final = avisos_mensuales + avisos_fijos
-    avisos_html = "".join([f"<li style='margin-bottom: 8px;'>{aviso}</li>" for aviso in lista_final])
+    avisos_html = "".join([f"<li style='margin-bottom: 8px;'>{aviso}</li>" for aviso in avisos_prioritarios])
 
     st.markdown(f"""
     <div style='background: rgba(255,255,255,0.05); padding: 20px; border-radius: 12px; border-left: 5px solid {accent_color}; margin-bottom: 25px;'>

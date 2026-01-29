@@ -646,76 +646,108 @@ def show_dashboard():
 
     # --- MDRT LAYOUT ---
     if campaign.lower().replace(' ', '_') == 'mdrt':
-        goal = 1810400
+        # 1. Constantes de Metas
+        META_MEMBER = 1810400
+        META_COT = 5431200
+        META_TOT = 10862400
+        
+        # 2. Lectura de Datos
         pa_acumulada = row.get('PA_Acumulada', 0)
-        pa_faltante = row.get('PA_Faltante_Miembro', 0)
         mes_actual = row.get('Mes_Actual', 1)
-        progress_pct = (pa_acumulada / goal) * 100
-        progress_color_class = get_progress_color(progress_pct)
+        
+        # Faltantes (Treat negative as 0)
+        faltante_miembro = max(0, row.get('PA_Faltante_Miembro', 0))
+        faltante_cot = max(0, row.get('PA_Faltante_COT', 0))
+        faltante_tot = max(0, row.get('PA_Faltante_TOT', 0))
+        
+        # 3. Cálculos de Promedio Mensual
+        meses_restantes = max(1, 12 - int(mes_actual) + 1)
+        mensual_member = faltante_miembro / meses_restantes
+        mensual_cot = faltante_cot / meses_restantes
+        mensual_tot = faltante_tot / meses_restantes
         
         st.divider()
         
-        # Monthly meta calculation (Using Excel month for precise math)
-        meses_restantes = max(1, 12 - int(mes_actual) + 1)
-        meta_mensual = pa_faltante / meses_restantes if pa_faltante > 0 else 0
-        
-        c1, c2, c3, c4 = st.columns(4)
-        with c1:
+        # FILA 1: Las Metas Totales
+        st.markdown("### Metas MDRT 2026")
+        col1, col2, col3 = st.columns(3)
+        with col1:
             st.markdown('<div class="metric-neutral">', unsafe_allow_html=True)
-            st.metric("Meta MDRT", f"${goal:,.0f}")
+            st.metric("Meta Miembro", f"${META_MEMBER:,.0f}")
             st.markdown('</div>', unsafe_allow_html=True)
-        with c2:
+        with col2:
+            st.markdown('<div class="metric-neutral">', unsafe_allow_html=True)
+            st.metric("Meta COT", f"${META_COT:,.0f}")
+            st.markdown('</div>', unsafe_allow_html=True)
+        with col3:
+            st.markdown('<div class="metric-neutral">', unsafe_allow_html=True)
+            st.metric("Meta TOT", f"${META_TOT:,.0f}")
+            st.markdown('</div>', unsafe_allow_html=True)
+            
+        # FILA 2: La Realidad Actual
+        st.markdown("<br>", unsafe_allow_html=True)
+        col_pa1, col_pa2, col_pa3 = st.columns([1, 2, 1])
+        with col_pa2:
+            progress_pct_member = (pa_acumulada / META_MEMBER) * 100
+            progress_color_class = get_progress_color(progress_pct_member)
             st.markdown(f'<div class="{progress_color_class}">', unsafe_allow_html=True)
-            st.metric("Prima Anualizada Acumulada", f"${pa_acumulada:,.2f}")
+            st.metric("Tu Producción Actual (PA)", f"${pa_acumulada:,.2f}")
             st.markdown('</div>', unsafe_allow_html=True)
-        with c3:
-            st.markdown('<div class="metric-neutral">', unsafe_allow_html=True)
-            # Security Shield for Faltante
-            if pa_faltante <= 0:
-                st.metric("Prima Anualizada Faltante", "$0.00", help="¡Meta MDRT lograda! 🎉")
-            else:
-                st.metric("Prima Anualizada Faltante", f"${pa_faltante:,.2f}")
-            st.markdown('</div>', unsafe_allow_html=True)
-        with c4:
-            st.markdown('<div class="metric-neutral">', unsafe_allow_html=True)
-            st.metric("Promedio Mensual Necesario", f"${meta_mensual:,.2f}", help=f"Para cumplir la meta a Diciembre, considerando que estamos en el mes {mes_actual}.")
-            st.markdown('</div>', unsafe_allow_html=True)
-
-        st.markdown("---")
-        indicator_pos = max(5, min(progress_pct, 95))
-        st.markdown(f"""
-            <div class="green-bar">
-                <div class="progress-label-container">
-                    <span>Tu Avance Financiero (Prima Anualizada)</span>
-                </div>
-                <div class="progress-value-floating">
-                    <div class="progress-indicator-text" style="left: {indicator_pos}%;">${pa_acumulada:,.2f}</div>
-                </div>
-            </div>
-        """, unsafe_allow_html=True)
-        progress_val = min(float(pa_acumulada / goal), 1.0) if goal > 0 else 0.0
-        st.progress(progress_val)
+            
+        # FILA 3: El Plan de Ataque
+        st.markdown("### Plan de Ataque (Restante)")
+        plan_col1, plan_col2, plan_col3 = st.columns(3)
         
-        status_txt = "¡Meta Lograda! 🎉" if pa_acumulada >= goal else f"Falta: ${max(0, goal - pa_acumulada):,.2f}"
-        st.markdown(f'''
-            <div style="display: flex; justify-content: space-between; font-size: 0.9em; margin-top: -10px;">
-                <span>$0</span>
-                <span style="font-weight: bold;">{status_txt}</span>
-                <span>Meta: ${goal:,.0f}</span>
-            </div>
-        ''', unsafe_allow_html=True)
+        with plan_col1:
+            st.markdown('<div class="metric-neutral" style="border-bottom: 3px solid #00ff88;">', unsafe_allow_html=True)
+            st.markdown("#### Nivel MIEMBRO")
+            st.metric("Faltante", f"${faltante_miembro:,.2f}")
+            st.metric("Promedio Mensual", f"${mensual_member:,.2f}")
+            st.markdown('</div>', unsafe_allow_html=True)
+            
+        with plan_col2:
+            st.markdown('<div class="metric-neutral" style="border-bottom: 3px solid #00f2ff;">', unsafe_allow_html=True)
+            st.markdown("#### Nivel COT")
+            st.metric("Faltante", f"${faltante_cot:,.2f}")
+            st.metric("Promedio Mensual", f"${mensual_cot:,.2f}")
+            st.markdown('</div>', unsafe_allow_html=True)
+            
+        with plan_col3:
+            st.markdown('<div class="metric-neutral" style="border-bottom: 3px solid #D4AF37;">', unsafe_allow_html=True)
+            st.markdown("#### Nivel TOT")
+            st.metric("Faltante", f"${faltante_tot:,.2f}")
+            st.metric("Promedio Mensual", f"${mensual_tot:,.2f}")
+            st.markdown('</div>', unsafe_allow_html=True)
+            
+        # FILA 4: Las Carreras Visuales
+        st.markdown("### Carreras Visuales")
         
-        # Time Progress
+        # Barra 1: Miembro
+        pct_member = min(pa_acumulada / META_MEMBER, 1.0)
+        st.markdown(f'<div class="progress-label-container"><span>Camino a Miembro ({pct_member*100:.1f}%)</span></div>', unsafe_allow_html=True)
+        st.progress(float(pct_member))
+        
+        # Barra 2: COT
+        pct_cot = min(pa_acumulada / META_COT, 1.0)
+        st.markdown(f'<div class="progress-label-container"><span>Camino a COT ({pct_cot*100:.1f}%)</span></div>', unsafe_allow_html=True)
+        st.progress(float(pct_cot))
+        
+        # Barra 3: TOT
+        pct_tot = min(pa_acumulada / META_TOT, 1.0)
+        st.markdown(f'<div class="progress-label-container"><span>Camino a TOT ({pct_tot*100:.1f}%)</span></div>', unsafe_allow_html=True)
+        st.progress(float(pct_tot))
+        
+        # Time Progress (consistent with other campaigns)
         time_progress = min(mes_actual / 12, 1.0)
         st.markdown("<br>", unsafe_allow_html=True)
-        st.markdown('<div class="progress-label-container"><span>Tu Avance en el Tiempo</span></div>', unsafe_allow_html=True)
+        st.markdown('<div class="progress-label-container"><span>Avance del Año (Tiempo)</span></div>', unsafe_allow_html=True)
         st.progress(float(time_progress) if pd.notna(time_progress) else 0.0)
         
         st.markdown(f'''
             <div style="display: flex; justify-content: space-between; font-size: 0.9em; margin-top: -10px;">
-                <span>Mes 0</span>
+                <span>Enero</span>
                 <span style="font-weight: bold; color: #00ff88;">Mes {mes_actual} de 12 ({time_progress*100:.0f}%)</span>
-                <span>Cierre</span>
+                <span>Diciembre</span>
             </div>
         ''', unsafe_allow_html=True)
 
